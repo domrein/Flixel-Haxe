@@ -499,7 +499,7 @@ package org.flixel;
 			}
 			
 			//All set!
-			switchState(Type.createInstance(Type.resolveClass("PlayState"), []));
+			switchState(Type.createInstance(_iState, []));
 			FlxState.screen.unsafeBind(FlxG.buffer);
 			removeEventListener(Event.ENTER_FRAME, create);
 			addEventListener(Event.ENTER_FRAME, update);
