@@ -153,7 +153,7 @@ class FlxObject extends FlxRect {
 	/**
 	 * An array of <code>FlxPoint</code> objects.  By default contains a single offset (0,0).
 	 */
-	public var colOffsets:Array<Dynamic>;
+	public var colOffsets:Array<FlxPoint>;
 	/**
 	 * Dedicated internal flag for whether or not this class is a FlxGroup.
 	 */
@@ -235,7 +235,7 @@ class FlxObject extends FlxRect {
 		colHullX = new FlxRect();
 		colHullY = new FlxRect();
 		colVector = new FlxPoint();
-		colOffsets = new Array<Dynamic>();
+		colOffsets = new Array<FlxPoint>();
 		colOffsets.push(new FlxPoint());
 		_group = false;
 	}

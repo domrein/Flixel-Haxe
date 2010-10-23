@@ -13,11 +13,9 @@ package org.flixel;
 	 * arrays or PNG files into strings that can be successfully loaded.
 	 */
 	class FlxTilemap extends FlxObject {
-		
-		public var fixed(null, setFixed) : Bool;
-		public var solid(null, setSolid) : Bool;
-		/*[Embed(source="data/autotiles.png")]*/ public static var ImgAuto:Class<Dynamic>;
-		/*[Embed(source="data/autotiles_alt.png")]*/ public static var ImgAutoAlt:Class<Dynamic>;
+
+		/*[Embed(source="data/autotiles.png")]*/ public static var ImgAuto:Class<Bitmap>;
+		/*[Embed(source="data/autotiles_alt.png")]*/ public static var ImgAutoAlt:Class<Bitmap>;
 		
 		/**
 		 * No auto-tiling.
@@ -70,8 +68,8 @@ package org.flixel;
 		var _pixels:BitmapData;
 		var _bbPixels:BitmapData;
 		var _bbKey:String;
-		var _data:Array<Dynamic>;
-		var _rects:Array<Dynamic>;
+		var _data:Array<Int>;
+		var _rects:Array<Rectangle>;
 		var _tileWidth:Int;
 		var _tileHeight:Int;
 		var _block:FlxObject;
@@ -114,12 +112,12 @@ package org.flixel;
 		 * 
 		 * @return	A pointer this instance of FlxTilemap, for chaining as usual :)
 		 */
-		public function loadMap(MapData:String, TileGraphic:Class<Dynamic>, ?TileWidth:Int=0, ?TileHeight:Int=0):FlxTilemap
+		public function loadMap(MapData:String, TileGraphic:Class<Bitmap>, ?TileWidth:Int=0, ?TileHeight:Int=0):FlxTilemap
 		{
 			//Figure out the map dimensions based on the data string
 			var c:Int;
-			var cols:Array<Dynamic>;
-			var rows:Array<Dynamic> = MapData.split("\n");
+			var cols:Array<String>;
+			var rows:Array<String> = MapData.split("\n");
 			heightInTiles = rows.length;
 			_data = new Array();
 			for(r in 0...heightInTiles)
@@ -132,8 +130,10 @@ package org.flixel;
 				}
 				if(widthInTiles == 0)
 					widthInTiles = cols.length;
-				for(c = 0; c < widthInTiles; c++)
-					_data.push(Int(cols[c]));
+				for(c in 0...widthInTiles)
+				{
+					_data.push(Std.parseInt(cols[c]));
+				}
 			}
 			
 			//Pre-process the map data if it's auto-tiled
@@ -142,7 +142,7 @@ package org.flixel;
 			if(auto > OFF)
 			{
 				collideIndex = startingIndex = drawIndex = 1;
-				for(i = 0; i < totalTiles; i++)
+				for(i in 0...totalTiles)
 					autoTile(i);
 			}
 
@@ -160,8 +160,8 @@ package org.flixel;
 			//Then go through and create the actual map
 			width = widthInTiles*_tileWidth;
 			height = heightInTiles*_tileHeight;
-			_rects = new Array(totalTiles);
-			for(i = 0; i < totalTiles; i++)
+			_rects = new Array();
+			for(i in 0...totalTiles)
 				updateTile(i);
 
 			//Pre-set some helper variables for later
@@ -172,7 +172,7 @@ package org.flixel;
 			if(_screenCols > widthInTiles)
 				_screenCols = widthInTiles;
 			
-			_bbKey = String(TileGraphic);
+			_bbKey = Std.string(TileGraphic);
 			generateBoundingTiles();
 			refreshHulls();
 			
@@ -291,7 +291,7 @@ package org.flixel;
 			var ri:Int = ty*widthInTiles+tx;
 			_flashPoint.x += tx*_tileWidth;
 			_flashPoint.y += ty*_tileHeight;
-			var opx:Int = _flashPoint.x;
+			var opx:Int = Std.int(_flashPoint.x);
 			var c:Int;
 			var cri:Int;
 			for(r in 0..._screenRows)
@@ -299,7 +299,7 @@ package org.flixel;
 				cri = ri;
 				for(c in 0..._screenCols)
 				{
-					_flashRect = cast( _rects[cri++], Rectangle);
+					_flashRect = _rects[cri++];
 					if(_flashRect != null)
 						FlxG.buffer.copyPixels(tileBitmap,_flashRect,_flashPoint,null,null,true);
 					_flashPoint.x += _tileWidth;
@@ -439,8 +439,13 @@ package org.flixel;
 				rs += widthInTiles;
 				r++;
 			}
-			if(colOffsets.length != col)
-				colOffsets.length = col;
+
+			for(n in 0...colOffsets.length-col)
+			{
+				colOffsets.pop();
+			}
+			/*if(colOffsets.length != col)
+				colOffsets.length = col;*/
 		}
 		
 		/**
@@ -513,11 +518,10 @@ package org.flixel;
 
 			//If this map is autotiled and it changes, locally update the arrangement
 			var i:Int;
-			var r:Int = int(Index/widthInTiles) - 1;
+			var r:Int = Std.int(Index/widthInTiles) - 1;
 			var rl:Int = r+3;
 			var c:Int = Index%widthInTiles - 1;
 			var cl:Int = c+3;
-			r = r;
 			while (r < rl)
 			{
 				for(c in 3...cl)
@@ -546,7 +550,7 @@ package org.flixel;
 		{
 			FlxG.log("FlxTilemap.setCallback() has been temporarily deprecated, sorry!");
 			if(Range <= 0) return;
-			for(var i:Int = Tile; i < Tile+Range; i++)
+			for(i in Tile...Tile+Range)
 				_callbacks[i] = Callback;
 		}
 		
@@ -557,7 +561,7 @@ package org.flixel;
 		 */
 		public function follow(?Border:Int=0):Void
 		{
-			FlxG.followBounds(x+Border*_tileWidth,y+Border*_tileHeight,width-Border*_tileWidth,height-Border*_tileHeight);
+			FlxG.followBounds(Std.int(x+Border*_tileWidth),Std.int(y+Border*_tileHeight),Std.int(width-Border*_tileWidth),Std.int(height-Border*_tileHeight));
 		}
 		
 		/**
@@ -574,18 +578,18 @@ package org.flixel;
 		 */
 		public function ray(StartX:Float, StartY:Float, EndX:Float, EndY:Float, Result:FlxPoint, ?Resolution:Int=1):Bool
 		{
-			var step:Int = _tileWidth;
+			var step:Float = _tileWidth;
 			if(_tileHeight < _tileWidth)
 				step = _tileHeight;
 			step /= Resolution;
-			var dx:Int = EndX - StartX;
-			var dy:Int = EndY - StartY;
-			var distance:Int = Math.sqrt(dx*dx + dy*dy);
+			var dx:Float = EndX - StartX;
+			var dy:Float = EndY - StartY;
+			var distance:Float = Math.sqrt(dx*dx + dy*dy);
 			var steps:Int = Math.ceil(distance/step);
-			var stepX:Int = dx/steps;
-			var stepY:Int = dy/steps;
-			var curX:Int = StartX - stepX;
-			var curY:Int = StartY - stepY;
+			var stepX:Float = dx/steps;
+			var stepY:Float = dy/steps;
+			var curX:Float = StartX - stepX;
+			var curY:Float = StartY - stepY;
 			var tx:Int;
 			var ty:Int;
 			for(i in 0...steps)
@@ -596,18 +600,18 @@ package org.flixel;
 				if((curX < 0) || (curX > width) || (curY < 0) || (curY > height))
 					continue;
 				
-				tx = curX/_tileWidth;
-				ty = curY/_tileHeight;
+				tx = Std.int(curX/_tileWidth);
+				ty = Std.int(curY/_tileHeight);
 				if((cast( _data[ty*widthInTiles+tx], Int)) >= collideIndex)
 				{
 					//Some basic helper stuff
 					tx *= _tileWidth;
 					ty *= _tileHeight;
-					var rx:Int = 0;
-					var ry:Int = 0;
+					var rx:Float = 0;
+					var ry:Float = 0;
 					var q:Float;
-					var lx:Int = curX-stepX;
-					var ly:Int = curY-stepY;
+					var lx:Float = curX-stepX;
+					var ly:Float = curY-stepY;
 					
 					//Figure out if it crosses the X boundary
 					q = tx;
@@ -652,12 +656,12 @@ package org.flixel;
 		 * 
 		 * @return	A comma-separated string containing the level data in a <code>FlxTilemap</code>-friendly format.
 		 */
-		public static function arrayToCSV(Data:Array<Dynamic>,Width:Int):String
+		public static function arrayToCSV(Data:Array<Int>,Width:Int):String
 		{
 			var r:Int;
 			var c:Int;
-			var csv:String;
-			var Height:Int = Data.length / Width;
+			var csv:String = "";
+			var Height:Int = Std.int(Data.length / Width);
 			for(r in 0...Height)
 			{
 				for(c in 0...Width)
@@ -687,16 +691,16 @@ package org.flixel;
 		 * 
 		 * @return	A comma-separated string containing the level data in a <code>FlxTilemap</code>-friendly format.
 		 */
-		public static function pngToCSV(PNGFile:Class<Dynamic>,?Invert:Bool=false,?Scale:Int=1):String
+		public static function pngToCSV(PNGFile:Class<Bitmap>,?Invert:Bool=false,?Scale:Int=1):String
 		{
 			//Import and scale image if necessary
 			var layout:Bitmap;
 			if(Scale <= 1)
-				layout = new PNGFile;
+				layout = Type.createInstance(PNGFile, []);
 			else
 			{
-				var tmp:Bitmap = new PNGFile;
-				layout = new Bitmap(new BitmapData(tmp.width*Scale,tmp.height*Scale));
+				var tmp:Bitmap = Type.createInstance(PNGFile, []);
+				layout = new Bitmap(new BitmapData(Std.int(tmp.width)*Scale,Std.int(tmp.height)*Scale));
 				var mtx:Matrix = new Matrix();
 				mtx.scale(Scale,Scale);
 				layout.bitmapData.draw(tmp,mtx);
@@ -707,9 +711,9 @@ package org.flixel;
 			var r:Int;
 			var c:Int;
 			var p:Int;
-			var csv:String;
-			var w:Int = layout.width;
-			var h:Int = layout.height;
+			var csv:String = "";
+			var w:Int = Std.int(layout.width);
+			var h:Int = Std.int(layout.height);
 			for(r in 0...h)
 			{
 				for(c in 0...w)
@@ -783,7 +787,7 @@ package org.flixel;
 			var ry:Int = 0;
 			if(rx >= _pixels.width)
 			{
-				ry = Int(rx/_pixels.width)*_tileHeight;
+				ry = Std.int(rx/_pixels.width)*_tileHeight;
 				rx %= _pixels.width;
 			}
 			_rects[Index] = (new Rectangle(rx,ry,_tileWidth,_tileHeight));

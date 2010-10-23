@@ -52,7 +52,7 @@ package org.flixel.data;
 		/**
 		 * @private
 		 */
-		var _lines:Array<Dynamic>;
+		var _lines:Array<String>;
 		/**
 		 * @private
 		 */
@@ -148,7 +148,7 @@ package org.flixel.data;
 			_extraDisplay.defaultTextFormat = new TextFormat("system",8,0xffffff,true,null,null,null,null,TextFormatAlign.RIGHT);
 			addChild(_extraDisplay);
 			
-			_lines = new Array<Dynamic>();
+			_lines = new Array();
 		}
 		
 		/**

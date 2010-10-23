@@ -12,6 +12,7 @@ import flash.geom.Point;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
+import flash.media.Sound;
 import flash.Lib;
 
 import org.flixel.data.FlxConsole;
@@ -46,8 +47,8 @@ class FlxGame extends Sprite {
 	//Flex v3.x SDK only (see note above):
 	//[Embed(source="data/nokiafc22.ttf",fontFamily="system")] protected var junk:String;
 	
-	/*[Embed(source="data/beep.mp3")]*/ var SndBeep:Class<Dynamic>;
-	/*[Embed(source="data/flixel.mp3")]*/ var SndFlixel:Class<Dynamic>;
+	/*[Embed(source="data/beep.mp3")]*/ var SndBeep:Class<Sound>;
+	/*[Embed(source="data/flixel.mp3")]*/ var SndFlixel:Class<Sound>;
 
 	/**
 	 * Sets 0, -, and + to control the global volume and P to pause.
@@ -62,7 +63,7 @@ class FlxGame extends Sprite {
 	public var pause:FlxGroup;
 	
 	//startup
-	public var _iState:Class<Dynamic>;
+	public var _iState:Class<FlxState>;
 	public var _created:Bool;
 	
 	//basic display stuff
@@ -72,7 +73,7 @@ class FlxGame extends Sprite {
 	public var _zoom:Int;
 	public var _gameXOffset:Int;
 	public var _gameYOffset:Int;
-	public var _frame:Class<Dynamic>;
+	public var _frame:Class<Bitmap>;
 	public var _zeroPoint:Point;
 	
 	//basic update stuff
@@ -85,7 +86,7 @@ class FlxGame extends Sprite {
 	//Pause screen, sound tray, support panel, dev console, and special effects objects
 	public var _soundTray:Sprite;
 	public var _soundTrayTimer:Float;
-	public var _soundTrayBars:Array<Dynamic>;
+	public var _soundTrayBars:Array<Bitmap>;
 	public var _console:FlxConsole;
 	
 	/**
@@ -96,7 +97,7 @@ class FlxGame extends Sprite {
 	 * @param	InitialState	The class name of the state you want to create and switch to first (e.g. MenuState).
 	 * @param	Zoom			The level of zoom (e.g. 2 means all pixels are now rendered twice as big).
 	 */
-	public function new(GameSizeX:Int,GameSizeY:Int,InitialState:Class<Dynamic>,?Zoom:Int=2)
+	public function new(GameSizeX:Int,GameSizeY:Int,InitialState:Class<FlxState>,?Zoom:Int=2)
 	{
 		super();
 		
@@ -135,7 +136,7 @@ class FlxGame extends Sprite {
 	 * 
 	 * @return	This <code>FlxGame</code> instance.
 	 */
-	function addFrame(Frame:Class<Dynamic>,ScreenOffsetX:Int,ScreenOffsetY:Int):FlxGame
+	function addFrame(Frame:Class<Bitmap>,ScreenOffsetX:Int,ScreenOffsetY:Int):FlxGame
 	{
 		_frame = Frame;
 		_gameXOffset = ScreenOffsetX;
@@ -472,7 +473,8 @@ class FlxGame extends Sprite {
 			tmp = new Bitmap(new BitmapData(4,i+1,false,0xffffff));
 			tmp.x = bx;
 			tmp.y = by;
-			_soundTrayBars.push(_soundTray.addChild(tmp));
+			_soundTray.addChild(tmp);
+			_soundTrayBars.push(tmp);
 			bx += 6;
 			by--;
 		}

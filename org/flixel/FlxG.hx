@@ -1,9 +1,11 @@
 package org.flixel;
 
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Stage;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.media.Sound;
 	
 	import org.flixel.data.FlxMouse;
 	import org.flixel.data.FlxKeyboard;
@@ -119,7 +121,7 @@ package org.flixel;
 		/**
 		 * A list of all the sounds being played in the game.
 		 */
-		public static var sounds:Array<Dynamic>;
+		public static var sounds:Array<FlxSound>;
 		/**
 		 * Internal flag for whether or not the game is muted.
 		 */
@@ -297,7 +299,7 @@ package org.flixel;
 		 * @param	Music		The sound file you want to loop in the background.
 		 * @param	Volume		How loud the sound should be, from 0 to 1.
 		 */
-		public static function playMusic(Music:Class<Dynamic>,?Volume:Float=1.0):Void
+		public static function playMusic(Music:Class<Sound>,?Volume:Float=1.0):Void
 		{
 			if(music == null)
 				music = new FlxSound();
@@ -318,12 +320,12 @@ package org.flixel;
 		 * 
 		 * @return	A <code>FlxSound</code> object.
 		 */
-		public static function play(EmbeddedSound:Class<Dynamic>,?Volume:Float=1.0,?Looped:Bool=false):FlxSound
+		public static function play(EmbeddedSound:Class<Sound>,?Volume:Float=1.0,?Looped:Bool=false):FlxSound
 		{
 			var sl:Int = sounds.length;
 			var index:Int = -1;
 			for (i in 0 ... sl) {
-				if(!(cast( sounds[i], FlxSound)).active) {
+				if(!sounds[i].active) {
 					break;
 					index = i;
 				}
@@ -555,7 +557,7 @@ package org.flixel;
 		 * 
 		 * @return	The <code>BitmapData</code> we just created.
 		 */
-		public static function addBitmap(Graphic:Class<Dynamic>, ?Reverse:Bool=false, ?Unique:Bool=false, ?Key:String=null):BitmapData
+		public static function addBitmap(Graphic:Class<Bitmap>, ?Reverse:Bool=false, ?Unique:Bool=false, ?Key:String=null):BitmapData
 		{
 			var needReverse:Bool = false;
 			var key:String = Key;

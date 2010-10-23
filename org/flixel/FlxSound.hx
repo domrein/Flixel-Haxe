@@ -97,7 +97,7 @@ package org.flixel;
 		 * 
 		 * @return	This <code>FlxSound</code> instance (nice for chaining stuff together, if you're into that).
 		 */
-		public function loadEmbedded(EmbeddedSound:Class<Dynamic>, ?Looped:Bool=false):FlxSound
+		public function loadEmbedded(EmbeddedSound:Class<Sound>, ?Looped:Bool=false):FlxSound
 		{
 			stop();
 			init();

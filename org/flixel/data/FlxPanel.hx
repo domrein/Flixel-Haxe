@@ -1,4 +1,5 @@
 package org.flixel.data;
+	import flash.display.Bitmap;
 
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxButton;
@@ -20,13 +21,13 @@ package org.flixel.data;
 	 */
 	class FlxPanel extends FlxObject {
 		
-		/*[Embed(source="donate.png")]*/ var ImgDonate:Class<Dynamic>;
-		/*[Embed(source="stumble.png")]*/ var ImgStumble:Class<Dynamic>;
-		/*[Embed(source="digg.png")]*/ var ImgDigg:Class<Dynamic>;
-		/*[Embed(source="reddit.png")]*/ var ImgReddit:Class<Dynamic>;
-		/*[Embed(source="delicious.png")]*/ var ImgDelicious:Class<Dynamic>;
-		/*[Embed(source="twitter.png")]*/ var ImgTwitter:Class<Dynamic>;
-		/*[Embed(source="close.png")]*/ var ImgClose:Class<Dynamic>;
+		/*[Embed(source="donate.png")]*/ var ImgDonate:Class<Bitmap>;
+		/*[Embed(source="stumble.png")]*/ var ImgStumble:Class<Bitmap>;
+		/*[Embed(source="digg.png")]*/ var ImgDigg:Class<Bitmap>;
+		/*[Embed(source="reddit.png")]*/ var ImgReddit:Class<Bitmap>;
+		/*[Embed(source="delicious.png")]*/ var ImgDelicious:Class<Bitmap>;
+		/*[Embed(source="twitter.png")]*/ var ImgTwitter:Class<Bitmap>;
+		/*[Embed(source="close.png")]*/ var ImgClose:Class<Bitmap>;
 
 		/**
 		 * @private
@@ -311,8 +312,7 @@ package org.flixel.data;
 		 */
 		public function onDonate():Void
 		{
-//TODO: get donation working properly
-//			FlxU.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business="+encodeURIComponent(_payPalID)+"&item_name="+encodeURIComponent(_gameTitle+" Contribution ("+_gameURL)+")&currency_code=USD&amount="+_payPalAmount);
+			FlxU.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business="+StringTools.urlEncode(_payPalID)+"&item_name="+StringTools.urlEncode(_gameTitle+" Contribution ("+_gameURL)+")&currency_code=USD&amount="+_payPalAmount);
 		}
 		
 		/**
@@ -320,8 +320,7 @@ package org.flixel.data;
 		 */
 		public function onStumble():Void
 		{
-//TODO: get stumble upon working properly
-//			FlxU.openURL("http://www.stumbleupon.com/submit?url="+encodeURIComponent(_gameURL));
+			FlxU.openURL("http://www.stumbleupon.com/submit?url="+StringTools.urlEncode(_gameURL));
 		}
 		
 		/**
@@ -329,8 +328,7 @@ package org.flixel.data;
 		 */
 		public function onDigg():Void
 		{
-//TODO: get digg working properly
-//			FlxU.openURL("http://digg.com/submit?url="+encodeURIComponent(_gameURL)+"&title="+encodeURIComponent(_gameTitle));
+			FlxU.openURL("http://digg.com/submit?url="+StringTools.urlEncode(_gameURL)+"&title="+StringTools.urlEncode(_gameTitle));
 		}
 		
 		/**
@@ -338,8 +336,7 @@ package org.flixel.data;
 		 */
 		public function onReddit():Void
 		{
-//TODO: get reddit working properly
-//			FlxU.openURL("http://www.reddit.com/submit?url="+encodeURIComponent(_gameURL));
+			FlxU.openURL("http://www.reddit.com/submit?url="+StringTools.urlEncode(_gameURL));
 		}
 		
 		/**
@@ -347,8 +344,7 @@ package org.flixel.data;
 		 */
 		public function onDelicious():Void
 		{
-//TODO: get delicious working properly
-//			FlxU.openURL("http://delicious.com/save?v=5&amp;noui&amp;jump=close&amp;url="+encodeURIComponent(_gameURL)+"&amp;title="+encodeURIComponent(_gameTitle));
+			FlxU.openURL("http://delicious.com/save?v=5&amp;noui&amp;jump=close&amp;url="+StringTools.urlEncode(_gameURL)+"&amp;title="+StringTools.urlEncode(_gameTitle));
 		}
 		
 		/**
@@ -356,8 +352,7 @@ package org.flixel.data;
 		 */
 		public function onTwitter():Void
 		{
-//TODO: get twitter working properly
-//			FlxU.openURL("http://twitter.com/home?status=Playing"+encodeURIComponent(" "+_gameTitle+" - "+_gameURL));
+			FlxU.openURL("http://twitter.com/home?status=Playing"+StringTools.urlEncode(" "+_gameTitle+" - "+_gameURL));
 		}
 		
 		/**

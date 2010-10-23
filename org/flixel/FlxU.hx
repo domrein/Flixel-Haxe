@@ -48,8 +48,7 @@ package org.flixel;
 		 */
 		public static function openURL(URL:String):Void
 		{
-//TODO: get url navigation working in haxe
-//			navigateToURL(new URLRequest(URL), "_blank");
+			flash.Lib.getURL(new URLRequest(URL), "_blank");
 		}
 		
 		public static function abs(N:Float):Float
@@ -57,13 +56,13 @@ package org.flixel;
 			return (N>0)?N:-N;
 		}
 		
-		public static function floor(N:Float):Float
+		public static function floor(N:Float):Int
 		{
 			var n:Int = Math.floor(N);
 			return (N>0)?(n):((n!=N)?(n-1):(n));
 		}
 		
-		public static function ceil(N:Float):Float
+		public static function ceil(N:Float):Int
 		{
 			var n:Int = Math.floor(N);
 			return (N>0)?((n!=N)?(n+1):(n)):(n);
@@ -215,7 +214,7 @@ package org.flixel;
 		{
 			var s:String = Type.getClassName(Obj);
 			trace("TODO: makes sure the class name is being parsed correctly.");
-			//s = s.replace("::",".");
+			s = StringTools.replace(s, "::", ".");
 			if(Simple)
 				s = s.substr(s.lastIndexOf(".")+1);
 			return s;
@@ -281,7 +280,7 @@ package org.flixel;
 		 * @param	Height		Desired height of the game world.
 		 * @param	Divisions	Pass a non-zero value to set <code>quadTreeDivisions</code>.  Default value is 3.
 		 */
-		public static function setWorldBounds(?X:Int=0, ?Y:Int=0, ?Width:Int=0, ?Height:Int=0, ?Divisions:Int=3):Void
+		public static function setWorldBounds(?X:Float=0, ?Y:Float=0, ?Width:Float=0, ?Height:Float=0, ?Divisions:Int=3):Void
 		{
 			if(quadTreeBounds == null)
 				quadTreeBounds = new FlxRect();
@@ -385,8 +384,8 @@ package org.flixel;
 			var i2:Int;
 			var obj1Hull:FlxRect = Object1.colHullX;
 			var obj2Hull:FlxRect = Object2.colHullX;
-			var co1:Array<Dynamic> = Object1.colOffsets;
-			var co2:Array<Dynamic> = Object2.colOffsets;
+			var co1:Array<FlxPoint> = Object1.colOffsets;
+			var co2:Array<FlxPoint> = Object2.colOffsets;
 			var l1:Int = co1.length;
 			var l2:Int = co2.length;
 			var ox1:Float;
@@ -580,8 +579,8 @@ package org.flixel;
 			var i2:Int;
 			var obj1Hull:FlxRect = Object1.colHullY;
 			var obj2Hull:FlxRect = Object2.colHullY;
-			var co1:Array<Dynamic> = Object1.colOffsets;
-			var co2:Array<Dynamic> = Object2.colOffsets;
+			var co1:Array<FlxPoint> = Object1.colOffsets;
+			var co2:Array<FlxPoint> = Object2.colOffsets;
 			var l1:Int = co1.length;
 			var l2:Int = co2.length;
 			var ox1:Float;

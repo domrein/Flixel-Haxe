@@ -100,7 +100,7 @@ package org.flixel.data;
 			_t = 256;
 			var i:Int = 0;
 			_lookup = {};
-			_map = new Array<Dynamic>();
+			_map = new Array();
 			for (i in 0 ... _t)
 				_map.push(null);
 			

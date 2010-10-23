@@ -1,5 +1,7 @@
 package org.flixel.data;
 
+	import flash.display.Bitmap;
+
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
@@ -11,10 +13,10 @@ package org.flixel.data;
 	 */
 	class FlxPause extends FlxGroup {
 		
-		/*[Embed(source="key_minus.png")]*/ var ImgKeyMinus:Class<Dynamic>;
-		/*[Embed(source="key_plus.png")]*/ var ImgKeyPlus:Class<Dynamic>;
-		/*[Embed(source="key_0.png")]*/ var ImgKey0:Class<Dynamic>;
-		/*[Embed(source="key_p.png")]*/ var ImgKeyP:Class<Dynamic>;
+		/*[Embed(source="key_minus.png")]*/ var ImgKeyMinus:Class<Bitmap>;
+		/*[Embed(source="key_plus.png")]*/ var ImgKeyPlus:Class<Bitmap>;
+		/*[Embed(source="key_0.png")]*/ var ImgKey0:Class<Bitmap>;
+		/*[Embed(source="key_p.png")]*/ var ImgKeyP:Class<Bitmap>;
 
 		/**
 		 * Constructor.

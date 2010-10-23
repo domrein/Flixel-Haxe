@@ -153,7 +153,7 @@ package org.flixel;
 			if(Object._group)
 			{
 				var m:FlxObject;
-				var members:Array<Dynamic> = (cast( Object, FlxGroup)).members;
+				var members:Array<FlxObject> = (cast Object).members;
 				var l:Int = members.length;
 				for(i in 0...l)
 				{

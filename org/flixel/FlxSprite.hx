@@ -85,7 +85,7 @@ import flash.display.Bitmap;
 		public var frameHeight:Int;
 		
 		//Animation helpers
-		var _animations:Array<Dynamic>;
+		var _animations:Array<FlxAnim>;
 		var _flipped:Int;
 		var _curAnim:FlxAnim;
 		var _curFrame:Int;
@@ -115,7 +115,7 @@ import flash.display.Bitmap;
 		 * @param	Y				The initial Y position of the sprite.
 		 * @param	SimpleGraphic	The graphic you want to display (OPTIONAL - for simple stuff only, do NOT use for animated images!).
 		 */
-		public function new(?X:Float=0,?Y:Float=0,?SimpleGraphic:Class<Dynamic>=null)
+		public function new(?X:Float=0,?Y:Float=0,?SimpleGraphic:Class<Bitmap>=null)
 		{
 			super();
 			x = X;
@@ -162,7 +162,7 @@ import flash.display.Bitmap;
 		 * 
 		 * @return	This FlxSprite instance (nice for chaining stuff together, if you're into that).
 		 */
-		public function loadGraphic(Graphic:Class<Dynamic>,?Animated:Bool=false,?Reverse:Bool=false,?Width:Int=0,?Height:Int=0,?Unique:Bool=false):FlxSprite
+		public function loadGraphic(Graphic:Class<Bitmap>,?Animated:Bool=false,?Reverse:Bool=false,?Width:Int=0,?Height:Int=0,?Unique:Bool=false):FlxSprite
 		{
 			_bakedRotation = 0;
 			_pixels = FlxG.addBitmap(Graphic,Reverse,Unique);
@@ -206,7 +206,7 @@ import flash.display.Bitmap;
 		 * 
 		 * @return	This FlxSprite instance (nice for chaining stuff together, if you're into that).
 		 */
-		public function loadRotatedGraphic(Graphic:Class<Dynamic>, ?Rotations:Int=16, ?Frame:Int=-1, ?AntiAliasing:Bool=false, ?AutoBuffer:Bool=false):FlxSprite
+		public function loadRotatedGraphic(Graphic:Class<Bitmap>, ?Rotations:Int=16, ?Frame:Int=-1, ?AntiAliasing:Bool=false, ?AutoBuffer:Bool=false):FlxSprite
 		{
 			//Create the brush and canvas
 			var rows:Int = Math.floor(Math.sqrt(Rotations));
@@ -623,7 +623,7 @@ import flash.display.Bitmap;
 		 * @param	FrameRate	The speed in frames per second that the animation should play at (e.g. 40 fps).
 		 * @param	Looped		Whether or not the animation is looped or just plays once.
 		 */
-		public function addAnimation(Name:String, Frames:Array<Dynamic>, ?FrameRate:Float=0, ?Looped:Bool=true):Void
+		public function addAnimation(Name:String, Frames:Array<Int>, ?FrameRate:Float=0, ?Looped:Bool=true):Void
 		{
 			_animations.push(new FlxAnim(Name,Frames,FrameRate,Looped));
 		}

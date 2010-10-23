@@ -1,5 +1,7 @@
 package org.flixel;
 
+import flash.display.Bitmap;
+
 /**
  * <code>FlxEmitter</code> is a lightweight particle emitter.
  * It can be used for one-time explosions or for
@@ -85,7 +87,7 @@ class FlxEmitter extends FlxGroup {
 	 * @param	X			The X position of the emitter.
 	 * @param	Y			The Y position of the emitter.
 	 */
-	public function new(?X:Int=0, ?Y:Int=0)
+	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super();
 		
@@ -119,7 +121,7 @@ class FlxEmitter extends FlxGroup {
 	 * 
 	 * @return	This FlxEmitter instance (nice for chaining stuff together, if you're into that).
 	 */
-	public function createSprites(Graphics:Class<Dynamic>, ?Quantity:Int=50, ?BakedRotations:Int=16, ?Multiple:Bool=true, ?Collide:Int=0):FlxEmitter
+	public function createSprites(Graphics:Class<Bitmap>, ?Quantity:Int=50, ?BakedRotations:Int=16, ?Multiple:Bool=true, ?Collide:Float=0):FlxEmitter
 	{
 		members = new Array();
 		var r:Int;

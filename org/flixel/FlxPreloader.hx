@@ -7,13 +7,16 @@ package org.flixel;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.display.BlendMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
+	//import flash.net.navigateToURL;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.utils.getDefinitionByName;
+	import flash.text.TextFormatAlign;
+	//import flash.utils.getDefinitionByName;
+	import flash.errors.Error;
 	import flash.Lib;
 	
 
@@ -22,9 +25,9 @@ package org.flixel;
 	 */
 	class FlxPreloader extends MovieClip {
 		
-		/*[Embed(source="data/logo.png")]*/ var ImgLogo:Class<Dynamic>;
-		/*[Embed(source="data/logo_corners.png")]*/ var ImgLogoCorners:Class<Dynamic>;
-		/*[Embed(source="data/logo_light.png")]*/ var ImgLogoLight:Class<Dynamic>;
+		/*[Embed(source="data/logo.png")]*/ var ImgLogo:Class<Bitmap>;
+		/*[Embed(source="data/logo_corners.png")]*/ var ImgLogoCorners:Class<Bitmap>;
+		/*[Embed(source="data/logo_light.png")]*/ var ImgLogoLight:Class<Bitmap>;
 
 		/**
 		 * @private
@@ -81,6 +84,7 @@ package org.flixel;
 		 */
 		public function new()
 		{
+			super();
 			minDisplayTime = 0;
 			
 			stop();
@@ -95,7 +99,7 @@ package org.flixel;
             catch(e:Error)
             {
                 var re:EReg = ~/\[.*:[0-9]+\]/;
-                FlxG.debug = re.test(e.getStackTrace());
+                FlxG.debug = re.match(e.getStackTrace());
             }
 			
 			var tmp:Bitmap;
@@ -107,7 +111,7 @@ package org.flixel;
 				var fmt:TextFormat = new TextFormat();
 				fmt.color = 0x000000;
 				fmt.size = 16;
-				fmt.align = "center";
+				fmt.align = TextFormatAlign.CENTER;
 				fmt.bold = true;
 				fmt.font = "system";
 				
@@ -132,7 +136,7 @@ package org.flixel;
 		
 		function goToMyURL(?event:MouseEvent=null):Void
 		{
-			navigateToURL(new URLRequest("http://"+myURL));
+			Lib.getURL(new URLRequest("http://"+myURL));
 		}
 		
 		function onEnterFrame(event:Event):Void
@@ -151,19 +155,19 @@ package org.flixel;
             {
                 removeEventListener(Event.ENTER_FRAME, onEnterFrame);
                 nextFrame();
-                var mainClass:Class<Dynamic> = Class(getDefinitionByName(className));
-	            if(mainClass)
+                var mainClass:Class<Dynamic> = Type.resolveClass(className);
+	            if(mainClass != null)
 	            {
-	                var app:Dynamic = new mainClass();
+	                var app:Dynamic = Type.createInstance(mainClass, []);
 	                addChild(cast( app, DisplayObject));
 	            }
                 removeChild(_buffer);
             }
             else
 			{
-				var percent:Int = root.loaderInfo.bytesLoaded/root.loaderInfo.bytesTotal;
+				var percent:Int = Std.int(root.loaderInfo.bytesLoaded/root.loaderInfo.bytesTotal);
 				if((_min > 0) && (percent > time/_min))
-					percent = time/_min;
+					percent = Std.int(time/_min);
             	update(percent);
 			}
         }
@@ -176,15 +180,15 @@ package org.flixel;
 		{
 			_min = 0;
 			if(!FlxG.debug)
-				_min = minDisplayTime*1000;
+				_min = Std.int(minDisplayTime*1000);
 			_buffer = new Sprite();
 			_buffer.scaleX = 2;
 			_buffer.scaleY = 2;
 			addChild(_buffer);
-			_width = stage.stageWidth/_buffer.scaleX;
-			_height = stage.stageHeight/_buffer.scaleY;
+			_width = Std.int(stage.stageWidth/_buffer.scaleX);
+			_height = Std.int(stage.stageHeight/_buffer.scaleY);
 			_buffer.addChild(new Bitmap(new BitmapData(_width,_height,false,0x00345e)));
-			var b:Bitmap = new ImgLogoLight();
+			var b:Bitmap = Type.createInstance(ImgLogoLight, []);
 			b.smoothing = true;
 			b.width = b.height = _height;
 			b.x = (_width-b.width)/2;
@@ -202,28 +206,36 @@ package org.flixel;
 			_text.y = _bmpBar.y - 11;
 			_text.width = 80;
 			_buffer.addChild(_text);
-			_logo = new ImgLogo();
+			_logo = Type.createInstance(ImgLogo, []);
 			_logo.scaleX = _logo.scaleY = _height/8;
 			_logo.x = (_width-_logo.width)/2;
 			_logo.y = (_height-_logo.height)/2;
 			_buffer.addChild(_logo);
-			_logoGlow = new ImgLogo();
+			_logoGlow = Type.createInstance(ImgLogo, []);
 			_logoGlow.smoothing = true;
-			_logoGlow.blendMode = "screen";
+			_logoGlow.blendMode = BlendMode.SCREEN;
 			_logoGlow.scaleX = _logoGlow.scaleY = _height/8;
 			_logoGlow.x = (_width-_logoGlow.width)/2;
 			_logoGlow.y = (_height-_logoGlow.height)/2;
 			_buffer.addChild(_logoGlow);
-			b = new ImgLogoCorners();
+			b = Type.createInstance(ImgLogoCorners, []);
 			b.smoothing = true;
 			b.width = _width;
 			b.height = _height;
 			_buffer.addChild(b);
 			b = new Bitmap(new BitmapData(_width,_height,false,0xffffff));
-			for(var i:Int = 0; i < _height; i+=2)
-				for(var j:Int = 0; j < _width; j++)
+			var i:Int = 0;
+			while(i < _height)
+			{
+				var j:Int = 0;
+				while(j < _width)
+				{
 					b.bitmapData.setPixel(j,i,0);
-			b.blendMode = "overlay";
+					j++;
+				}
+				i += 2;
+			}
+			b.blendMode = BlendMode.OVERLAY;
 			b.alpha = 0.25;
 			_buffer.addChild(b);
 		}

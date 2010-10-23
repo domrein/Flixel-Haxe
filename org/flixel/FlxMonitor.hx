@@ -23,7 +23,7 @@ package org.flixel;
 		/**
 		 * An array to hold all the data we are averaging.
 		 */
-		var _data:Array<Dynamic>;
+		var _data:Array<Float>;
 		
 		/**
 		 * Creates the monitor array and sets the size.
@@ -37,7 +37,7 @@ package org.flixel;
 			if(_size <= 0)
 				_size = 1;
 			_itr = 0;
-			_data = new Array<Dynamic>();
+			_data = new Array();
 			for (i in 0 ... _size)
 				_data.push(Default);
 		}

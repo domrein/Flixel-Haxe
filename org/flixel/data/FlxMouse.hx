@@ -1,5 +1,6 @@
 package org.flixel.data;
 
+	import flash.display.Bitmap;
 	import flash.events.MouseEvent;
 	
 	import org.flixel.FlxPoint;
@@ -13,7 +14,7 @@ package org.flixel.data;
 	class FlxMouse
 	 {
 		
-		/*[Embed(source="cursor.png")]*/ var ImgDefaultCursor:Class<Dynamic>;
+		/*[Embed(source="cursor.png")]*/ var ImgDefaultCursor:Class<Bitmap>;
 		
 		/**
 		 * Current X position of the mouse pointer in the game world.
@@ -70,7 +71,7 @@ package org.flixel.data;
 		 * @param	XOffset		The number of pixels between the mouse's screen position and the graphic's top left corner.
 		 * * @param	YOffset		The number of pixels between the mouse's screen position and the graphic's top left corner. 
 		 */
-		public function show(?Graphic:Class<Dynamic>=null,?XOffset:Int=0,?YOffset:Int=0):Void
+		public function show(?Graphic:Class<Bitmap>=null,?XOffset:Int=0,?YOffset:Int=0):Void
 		{
 			_out = true;
 			if(Graphic != null)
@@ -100,7 +101,7 @@ package org.flixel.data;
 		 * @param	XOffset		The number of pixels between the mouse's screen position and the graphic's top left corner.
 		 * * @param	YOffset		The number of pixels between the mouse's screen position and the graphic's top left corner. 
 		 */
-		public function load(Graphic:Class<Dynamic>,?XOffset:Int=0,?YOffset:Int=0):Void
+		public function load(Graphic:Class<Bitmap>,?XOffset:Int=0,?YOffset:Int=0):Void
 		{
 			if(Graphic == null)
 				Graphic = ImgDefaultCursor;

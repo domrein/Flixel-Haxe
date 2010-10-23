@@ -13,7 +13,7 @@ package org.flixel;
 		/**
 		 * Array of all the <code>FlxObject</code>s that exist in this layer.
 		 */
-		public var members:Array<Dynamic>;
+		public var members:Array<FlxObject>;
 		/**
 		 * Helpers for moving/updating group members.
 		 */
@@ -438,7 +438,7 @@ package org.flixel;
 				if(o != null)
 					o.destroy();
 			}
-			members = new Array<Dynamic>();
+			members = new Array();
 		}
 		
 		/**
