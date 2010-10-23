@@ -8,14 +8,10 @@ package org.flixel;
 		 * @default 0
 		 */
 		
-		public var bottom(getBottom, null) : Float
-		;
-		public var left(getLeft, null) : Float
-		;
-		public var right(getRight, null) : Float
-		;
-		public var top(getTop, null) : Float
-		;
+		public var bottom(getBottom, null):Float;
+		public var left(getLeft, null):Float;
+		public var right(getRight, null):Float;
+		public var top(getTop, null):Float;
 		/**
 		 * @default 0
 		 */
@@ -33,7 +29,7 @@ package org.flixel;
 		 * @param	Width	Desired width of the rectangle.
 		 * @param	Height	Desired height of the rectangle.
 		 */
-		public function new(?X:Int=0, ?Y:Int=0, ?Width:Int=0, ?Height:Int=0)
+		public function new(?X:Float=0, ?Y:Float=0, ?Width:Float=0, ?Height:Float=0)
 		{
 			super(X,Y);
 			width = Width;

@@ -72,7 +72,7 @@ package org.flixel;
 			width = widthInTiles*_tileSize;
 			height = heightInTiles*_tileSize;
 			var numTiles:Int = widthInTiles*heightInTiles;
-			var numGraphics:Int = _pixels.width/_tileSize;
+			var numGraphics:Int = Math.floor(_pixels.width/_tileSize);
 			for(i in 0...numTiles)
 			{
 				if(FlxU.random()*(numGraphics+Empties) > Empties)
@@ -96,7 +96,7 @@ package org.flixel;
 		function renderBlock():Void
 		{
 			getScreenXY(_point);
-			var opx:Int = _point.x;
+			var opx:Int = Math.floor(_point.x);
 			var rl:Int = _rects.length;
 			_flashPoint.x = _point.x;
 			_flashPoint.y = _point.y;

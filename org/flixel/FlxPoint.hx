@@ -24,7 +24,7 @@ package org.flixel;
 		 * @param	X		The X-coordinate of the point in space.
 		 * @param	Y		The Y-coordinate of the point in space.
 		 */
-		public function new(?X:Int=0, ?Y:Int=0)
+		public function new(?X:Float=0, ?Y:Float=0)
 		{
 			x = X;
 			y = Y;

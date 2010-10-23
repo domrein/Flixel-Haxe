@@ -80,7 +80,7 @@ package org.flixel;
 		{
 			if(UseGlobalSeed && !Math.isNaN(_seed))
 			{
-				var random:Int = Math.floor(randomize(_seed));
+				var random:Float = randomize(_seed);
 				_seed = mutate(_seed,random);
 				return random;
 			}
@@ -182,9 +182,9 @@ package org.flixel;
 		public static function rotatePoint(X:Float, Y:Float, PivotX:Float, PivotY:Float, Angle:Float,?P:FlxPoint=null):FlxPoint
 		{
 			if(P == null) P = new FlxPoint();
-			var radians:Int = Math.floor(-Angle / 180 * Math.PI);
-			var dx:Int = Math.floor(X-PivotX);
-			var dy:Int = Math.floor(PivotY-Y);
+			var radians:Float = -Angle / 180 * Math.PI;
+			var dx:Float = X-PivotX;
+			var dy:Float = PivotY-Y;
 			P.x = PivotX + Math.cos(radians)*dx - Math.sin(radians)*dy;
 			P.y = PivotY - (Math.sin(radians)*dx + Math.cos(radians)*dy);
 			return P;
@@ -244,13 +244,13 @@ package org.flixel;
 		 * 
 		 * @return	The altered Velocity value.
 		 */
-		public static function computeVelocity(Velocity:Float, ?Acceleration:Int=0, ?Drag:Int=0, ?Max:Int=10000):Float
+		public static function computeVelocity(Velocity:Float, ?Acceleration:Float=0, ?Drag:Float=0, ?Max:Float=10000):Float
 		{
 			if(Acceleration != 0)
 				Velocity += Acceleration*FlxG.elapsed;
 			else if(Drag != 0)
 			{
-				var d:Int = Math.floor(Drag*FlxG.elapsed);
+				var d:Float = Drag*FlxG.elapsed;
 				if(Velocity - d > 0)
 					Velocity -= d;
 				else if(Velocity + d < 0)
@@ -356,8 +356,8 @@ package org.flixel;
 		public static function solveXCollision(Object1:FlxObject, Object2:FlxObject):Bool
 		{
 			//Avoid messed up collisions ahead of time
-			var o1:Int = Math.floor(Object1.colVector.x);
-			var o2:Int = Math.floor(Object2.colVector.x);
+			var o1:Float = Object1.colVector.x;
+			var o2:Float = Object2.colVector.x;
 			if(o1 == o2)
 				return false;
 			
@@ -553,8 +553,8 @@ package org.flixel;
 		public static function solveYCollision(Object1:FlxObject, Object2:FlxObject):Bool
 		{
 			//Avoid messed up collisions ahead of time
-			var o1:Int = Math.floor(Object1.colVector.y);
-			var o2:Int = Math.floor(Object2.colVector.y);
+			var o1:Float = Object1.colVector.y;
+			var o2:Float = Object2.colVector.y;
 			if(o1 == o2)
 				return false;
 			

@@ -600,7 +600,7 @@ package org.flixel;
 		 * @param	Target		The object to follow.
 		 * @param	Lerp		How much lag the camera should have (can help smooth out the camera movement).
 		 */
-		public static function follow(Target:FlxObject, ?Lerp:Int=1):Void
+		public static function follow(Target:FlxObject, ?Lerp:Float=1):Void
 		{
 			followTarget = Target;
 			followLerp = Lerp;
@@ -618,7 +618,7 @@ package org.flixel;
 		 * @param	LeadX		Percentage of X velocity to add to the camera's motion.
 		 * @param	LeadY		Percentage of Y velocity to add to the camera's motion.
 		 */
-		public static function followAdjust(?LeadX:Int = 0, ?LeadY:Int = 0):Void
+		public static function followAdjust(?LeadX:Float = 0, ?LeadY:Float = 0):Void
 		{
 			followLead = new Point(LeadX,LeadY);
 		}
