@@ -13,7 +13,7 @@ package org.flixel;
 		/**
 		 * Array of all the <code>FlxObject</code>s that exist in this layer.
 		 */
-		public var members:Array<FlxObject>;
+		public var members:Array<Dynamic>;  //NOTE: This array must be Dynamic to function correctly in cpp (I wish I knew why)
 		/**
 		 * Helpers for moving/updating group members.
 		 */
@@ -28,7 +28,7 @@ package org.flixel;
 			super();
 			_group = true;
 			solid = false;
-			members = new Array();
+			members = new Array<FlxObject>();
 			_last = new FlxPoint();
 			_first = true;
 		}
@@ -430,6 +430,7 @@ package org.flixel;
 		 */
 		function destroyMembers():Void
 		{
+			trace("destroyMembers called!");
 			var o:FlxObject;
 			var l:Int = members.length;
 			for(i in 0...l)

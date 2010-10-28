@@ -48,7 +48,7 @@ package org.flixel;
 		 */
 		public static function openURL(URL:String):Void
 		{
-			flash.Lib.getURL(new URLRequest(URL), "_blank");
+			//flash.Lib.getURL(new URLRequest(URL), "_blank");
 		}
 		
 		public static function abs(N:Float):Float
@@ -213,7 +213,7 @@ package org.flixel;
 		public static function getClassName(Obj:Dynamic,?Simple:Bool=false):String
 		{
 			var s:String = Type.getClassName(Obj);
-			trace("TODO: makes sure the class name is being parsed correctly.");
+			//trace("TODO: makes sure the class name is being parsed correctly.");
 			s = StringTools.replace(s, "::", ".");
 			if(Simple)
 				s = s.substr(s.lastIndexOf(".")+1);
