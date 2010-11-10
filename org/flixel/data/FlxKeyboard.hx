@@ -95,7 +95,7 @@ package org.flixel.data;
 		 */
 		public function new()
 		{
-			//BASIC STORAGE & TRACKING			
+			//BASIC STORAGE & TRACKING
 			
 			_t = 256;
 			var i:Int = 0;
@@ -105,9 +105,17 @@ package org.flixel.data;
 				_map.push(null);
 			
 			//LETTERS
-			for (i in 65 ... 91)
-				addKey(String.fromCharCode(i),i);
-			
+			var letterKeyRange:Int = 26;
+			#if flash9
+			var letterKeyStart:Int = 65;
+			#elseif iphone
+			var letterKeyStart:Int = 97; //NOTE: these key inputs are kinda pointless for iphone
+			#elseif cpp
+			var letterKeyStart:Int = 97;
+			#end
+			for (i in letterKeyStart ... letterKeyStart + letterKeyRange) {
+				addKey(String.fromCharCode(i).toUpperCase(),i);
+			}
 			//NUMBERS
 			i = 48;
 			addKey("ZERO",i++);
@@ -215,6 +223,7 @@ package org.flixel.data;
 		 */
 		public function handleKeyDown(event:KeyboardEvent):Void
 		{
+			trace("event.keyCode: " + event.keyCode);
 			var o:Dynamic = _map[event.keyCode];
 			if(o == null) return;
 			if(o.current > 0) o.current = 1;
