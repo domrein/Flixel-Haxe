@@ -160,7 +160,7 @@ package org.flixel.data;
 		{
 			if(Text == null)
 				Text = "NULL";
-			trace(Text);
+			//trace(Text);
 			_lines.push(Text);
 			if(_lines.length > MAX_CONSOLE_LINES)
 			{

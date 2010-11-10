@@ -166,8 +166,6 @@ import flash.display.Bitmap;
 		{
 			_bakedRotation = 0;
 			_pixels = FlxG.addBitmap(Graphic,Reverse,Unique);
-			//TEMP NOTE: bitmap loads correctly up to this point at least
-			
 			if(Reverse)
 				_flipped = _pixels.width>>1;
 			else

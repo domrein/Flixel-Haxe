@@ -42,7 +42,7 @@ package org.flixel.data;
 		 * @param	FlashComplete	A function you want to run when the flash finishes
 		 * @param	Force			Force the effect to reset
 		 */
-		public function start(?Color:Int=0xffffffff, ?Duration:Int=1, ?FlashComplete:Dynamic=null, ?Force:Bool=false):Void
+		public function start(?Color:Int=0xffffffff, ?Duration:Float=1, ?FlashComplete:Dynamic=null, ?Force:Bool=false):Void
 		{
 			if(!Force && exists) return;
 			fill(Color);

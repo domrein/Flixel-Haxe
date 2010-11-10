@@ -569,7 +569,8 @@ package org.flixel;
 					//Generate a unique key
 					var inc:Int = 0;
 					var ukey:String;
-					do { ukey = key + inc++;
+					do {
+						ukey = key + inc++;
 					} while((Reflect.hasField(_cache, ukey)) && (Reflect.field(_cache, ukey) != null));
 					key = ukey;
 				}
@@ -577,7 +578,9 @@ package org.flixel;
 			//If there is no data for this key, generate the requested graphic
 			if(!checkBitmapCache(key))
 			{
-				Reflect.setField(_cache, key, Type.createInstance(Graphic, []).bitmapData);
+				//flash.Lib.current.addChild(Type.createInstance(Graphic, []));
+				var bd:BitmapData = Type.createInstance(Graphic, []).bitmapData;
+				Reflect.setField(_cache, key, bd);
 				if(Reverse) needReverse = true;
 			}
 			var pixels:BitmapData = Reflect.field(_cache, key);

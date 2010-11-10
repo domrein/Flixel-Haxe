@@ -184,18 +184,17 @@ class FlxGame extends Sprite {
 		FlxG.quake.stop();
 		_screen.x = 0;
 		_screen.y = 0;
-		
 		//Swap the new state for the old one and dispose of it
 		_screen.addChild(State);
 		if(_state != null)
 		{
 			_state.destroy(); //important that it is destroyed while still in the display list
+			//_screen.addChild(State);
 			_screen.swapChildren(State,_state);
 			_screen.removeChild(_state);
 		}
 		_state = State;
 		_state.scaleX = _state.scaleY = _zoom;
-		
 		//Finally, create the new state
 		_state.create();
 	}
@@ -411,7 +410,6 @@ class FlxGame extends Sprite {
 		tmp.scaleX = tmp.scaleY = _zoom;
 		_screen.addChild(tmp);
 		FlxG.buffer = tmp.bitmapData;
-		
 		//Initialize game console
 		_console = new FlxConsole(_gameXOffset,_gameYOffset,_zoom);
 		addChild(_console);
@@ -425,7 +423,6 @@ class FlxGame extends Sprite {
 			underline += "-";
 		FlxG.log(vstring);
 		FlxG.log(underline);
-		
 		//Add basic input even listeners
 		
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, FlxG.keys.handleKeyDown);
@@ -434,7 +431,7 @@ class FlxGame extends Sprite {
 		stage.addEventListener(MouseEvent.MOUSE_UP, FlxG.mouse.handleMouseUp);
 		stage.addEventListener(MouseEvent.MOUSE_OUT, FlxG.mouse.handleMouseOut);
 		stage.addEventListener(MouseEvent.MOUSE_OVER, FlxG.mouse.handleMouseOver);
-						
+
 		//Initialize the pause screen
 		stage.addEventListener(Event.DEACTIVATE, onFocusLost);
 		stage.addEventListener(Event.ACTIVATE, onFocus);
@@ -447,7 +444,7 @@ class FlxGame extends Sprite {
 		tmp = new Bitmap(new BitmapData(80,30,true,0x7F000000));
 		_soundTray.x = (_gameXOffset+FlxG.width/2)*_zoom-(tmp.width/2)*_soundTray.scaleX;
 		_soundTray.addChild(tmp);
-		
+
 		var text:TextField = new TextField();
 		text.width = tmp.width;
 		text.height = tmp.height;
@@ -464,7 +461,7 @@ class FlxGame extends Sprite {
 		_soundTray.addChild(text);
 		text.text = "VOLUME";
 		text.y = 16;
-		
+
 		var bx:Int = 10;
 		var by:Int = 14;
 		_soundTrayBars = new Array();
@@ -488,7 +485,7 @@ class FlxGame extends Sprite {
 			bmp.scaleY = _zoom;
 			addChild(bmp);
 		}
-		
+
 		//Check for saved sound preference data
 		soundPrefs = new FlxSave();
 		if(soundPrefs.bind("flixel") && (soundPrefs.data.sound != null))

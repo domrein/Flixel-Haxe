@@ -156,45 +156,49 @@ package org.flixel;
 		 */
 		public function play():Void
 		{
+			
 			if(_position < 0)
-				return;
+			    return;
+			
 			if(_looped)
 			{
-				if(_position == 0)
-				{
-					if(_channel == null)
-						_channel = _sound.play(0,9999,_transform);
-					if(_channel == null)
-						active = false;
-				}
-				else
-				{
-					_channel = _sound.play(_position,0,_transform);
-					if(_channel == null)
-						active = false;
-					else
-						_channel.addEventListener(Event.SOUND_COMPLETE, looped);
-				}
+			    if(_position == 0)
+			    {
+			        if(_channel == null)
+			            _channel = _sound.play(0,9999,_transform);
+			        if(_channel == null)
+			            active = false;
+			    }
+			    else
+			    {
+			        _channel = _sound.play(_position,0,_transform);
+			        if(_channel == null)
+			            active = false;
+			        else
+			            _channel.addEventListener(Event.SOUND_COMPLETE, looped);
+			    }
 			}
 			else
 			{
-				if(_position == 0)
-				{
-					if(_channel == null)
-					{
-						_channel = _sound.play(0,0,_transform);
-						if(_channel == null)
-							active = false;
-						else
-							_channel.addEventListener(Event.SOUND_COMPLETE, stopped);
-					}
-				}
-				else
-				{
-					_channel = _sound.play(_position,0,_transform);
-					if(_channel == null)
-						active = false;
-				}
+			    if(_position == 0)
+			    {
+			        if(_channel == null)
+			        {
+			            _channel = _sound.play(0,0,_transform);
+			            if(_channel == null)
+			                active = false;
+			            else
+			                _channel.addEventListener(Event.SOUND_COMPLETE, stopped);
+			        }
+			    }
+			    else
+			    {
+			        _channel = _sound.play(_position,0,_transform);
+			        if(_channel == null)
+			            active = false;
+			        else
+			            _channel.addEventListener(Event.SOUND_COMPLETE, stopped);
+			    }
 			}
 			playing = (_channel != null);
 			_position = 0;
